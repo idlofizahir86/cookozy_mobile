@@ -1,0 +1,64 @@
+import 'package:cookozy/ui/widgets/custom_button_widget.dart';
+import 'package:flutter/material.dart';
+import '../../shared/theme.dart';
+
+class OnBoardingPage extends StatelessWidget {
+  const OnBoardingPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: kAccentColor,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 50),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 201,
+                    child: Image.asset(
+                      "assets/cook_onboard.png",
+                    ),
+                  ),
+                  SizedBox(
+                    height: 79,
+                    child: Image.asset(
+                      "assets/cookozy-logo.png",
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 84),
+            Text(
+              "Bagikan dan temukan resep\nsehat sesuai budget kamu\ndi sini",
+              style: regularTextStyle.copyWith(
+                fontSize: 21,
+                fontStyle: FontStyle.italic,
+                color: kSecondaryColor,
+              ),
+            ),
+            const SizedBox(height: 84),
+            const CustomButtonWidget(buttonText: "LOGIN"),
+            const CustomButtonWidget(buttonText: "REGISTER"),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/main');
+              },
+              child: Text(
+                "Lewati",
+                style: boldTextStyle.copyWith(
+                  color: kSecondaryColor,
+                  fontSize: 21,
+                  decoration: TextDecoration.underline,
+                  decorationColor: kSecondaryColor,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+          ],
+        ));
+  }
+}
