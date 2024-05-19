@@ -1,4 +1,4 @@
-import 'package:cookozy/ui/widgets/recipe_list.dart';
+import '../widgets/recipe_list.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/banner_carousel.dart';
@@ -168,7 +168,7 @@ Widget headerDasboard(BuildContext context) {
           children: [
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/main');
+                Navigator.pushNamed(context, '/search');
               },
               child: Container(
                 width: 55,

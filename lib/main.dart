@@ -1,4 +1,6 @@
-import 'package:cookozy/ui/pages/main_page.dart';
+import '../../cubit/search_cubit.dart';
+import '../../ui/pages/main_page.dart';
+import '../../ui/pages/search_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../ui/pages/onboarding_page.dart';
@@ -21,6 +23,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => PageCubit(),
+        ), 
+        BlocProvider(
+          create: (context) => SearchCubit(),
         ),
       ],
       child: MaterialApp(
@@ -29,6 +34,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => const SplashPage(),
           '/onboarding': (context) => const OnBoardingPage(),
           '/main': (context) => const MainPage(),
+          '/search': (context) => const SearchPage(),
         },
       ),
     );

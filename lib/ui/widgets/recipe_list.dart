@@ -9,9 +9,9 @@ class RecipeList extends StatelessWidget {
   final String recipeType;
 
   const RecipeList({
-    Key? key,
+    super.key,
     required this.recipeType,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,8 @@ class RecipeList extends StatelessWidget {
 
           // Filter resep berdasarkan jenis
           final List<Map<String, dynamic>> recipesByType = allRecipes
-              .where((recipe) => recipe['type'] == recipeType)
+              .where((recipe) =>
+                  recipe['type'] == recipeType && recipe['verified'] == true)
               .toList();
 
           // Jika jumlah resep berdasarkan jenis kurang dari 5, tampilkan semua resep yang tersedia

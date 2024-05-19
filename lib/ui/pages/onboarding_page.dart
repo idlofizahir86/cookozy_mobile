@@ -1,4 +1,4 @@
-import 'package:cookozy/ui/widgets/custom_button_widget.dart';
+import '../widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import '../../shared/theme.dart';
 
@@ -41,8 +41,19 @@ class OnBoardingPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 84),
-            const CustomButtonWidget(buttonText: "LOGIN"),
-            const CustomButtonWidget(buttonText: "REGISTER"),
+            CustomButtonWidget(
+              title: "LOGIN",
+              color: kSecondaryColor,
+              onTap: () {},
+              titleColor: kWhiteColor,
+            ),
+            SizedBox(height: 10),
+            CustomButtonWidget(
+              title: "REGISTER",
+              color: kSecondaryColor,
+              onTap: () {},
+              titleColor: kWhiteColor,
+            ),
             InkWell(
               onTap: () {
                 Navigator.pushNamed(context, '/main');

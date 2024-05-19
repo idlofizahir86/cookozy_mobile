@@ -11,17 +11,21 @@ class RecipeCard extends StatelessWidget {
   final String type;
 
   const RecipeCard({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.userName,
     required this.title,
     required this.description,
     required this.level,
     required this.type,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
+    print(
+        'Recipe Card Data: $title, $description, $level, $type, $imageUrl, $userName');
+
+
     return Container(
       width: 164,
       height: 241,

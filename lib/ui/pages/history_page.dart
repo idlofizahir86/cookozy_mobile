@@ -1,19 +1,56 @@
+import 'package:cookozy_mobile/ui/widgets/all_recipe_list.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/theme.dart';
+import '../widgets/top_section_widget.dart';
 
 class HistoryPage extends StatelessWidget {
-  const HistoryPage({super.key});
+  const HistoryPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          "HALAMAN \nHISTORY RESEP",
-          style: boldTextStyle.copyWith(
-            fontSize: 30,
-          ),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: kWhiteColor,
+        body: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TopSectionWidget(
+                  title: "Histori Resep",
+                ),
+                Expanded(
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          [
+                            AllRecipeList(),
+                            SizedBox(height: 70),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Positioned(
+              bottom: 70,
+              right: 16,
+              child: FloatingActionButton(
+                onPressed: () {
+                  // Tambahkan logika untuk tombol di sini
+                },
+                backgroundColor: kSecondaryColor,
+                child: Icon(
+                  Icons.add,
+                  color: kWhiteColor,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

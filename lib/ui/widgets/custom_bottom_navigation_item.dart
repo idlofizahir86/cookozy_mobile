@@ -7,10 +7,10 @@ class CustomBottomNavigationItem extends StatelessWidget {
   final String itemName;
 
   const CustomBottomNavigationItem({
-    Key? key,
+    super.key,
     required this.index,
     required this.itemName,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

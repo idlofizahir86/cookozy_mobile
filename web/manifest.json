@@ -1,6 +1,6 @@
 {
-    "name": "cookozy",
-    "short_name": "cookozy",
+    "name": "cookozy_mobile",
+    "short_name": "cookozy_mobile",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
