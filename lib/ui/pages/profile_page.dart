@@ -1,8 +1,9 @@
-import 'package:cookozy_mobile/ui/widgets/custom_button_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../shared/theme.dart';
+import '../widgets/custom_button_widget.dart';
 import '../widgets/setting_item_card.dart';
 
 final Uri whatsappUrl = Uri.parse("https://wa.me/6285173044086");
@@ -39,7 +40,7 @@ class ProfilePage extends StatelessWidget {
                         left: 20,
                         right: 20,
                       ),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,

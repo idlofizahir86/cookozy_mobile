@@ -1,15 +1,19 @@
+import 'package:cookozy_mobile/model/recipe_model.dart';
 import 'package:flutter/material.dart';
 import '../../service/recipe_service.dart';
 import 'recipe_card.dart';
 
 class AllRecipeList extends StatelessWidget {
+  final String type;
+
   const AllRecipeList({
     super.key,
+    this.type = "",
   });
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
+    return FutureBuilder<List<RecipeModel>>(
       future: fetchRecipes(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -22,11 +26,19 @@ class AllRecipeList extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
-          final List<Map<String, dynamic>> allRecipes = snapshot.data ?? [];
-
+          final List<RecipeModel> allRecipes = snapshot.data ?? [];
+          List<RecipeModel> recipesByType = allRecipes;
+          if (type == "") {
+            recipesByType =
+                allRecipes.where((recipe) => recipe.verified == true).toList();
+          } else {
+            recipesByType = allRecipes
+                .where(
+                  (recipe) => recipe.verified == true && recipe.type == type,
+                )
+                .toList();
+          }
           // Filter resep berdasarkan jenis yang terverifikasi
-          final List<Map<String, dynamic>> recipesByType =
-              allRecipes.where((recipe) => recipe['verified'] == true).toList();
 
           return LayoutBuilder(
             builder: (context, constraints) {
@@ -50,12 +62,9 @@ class AllRecipeList extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var recipe = recipesByType[index];
                   return RecipeCard(
-                    imageUrl: recipe['image_url'] ?? '',
-                    userName: recipe['user_name'] ?? '',
-                    title: recipe['title'] ?? '',
-                    description: recipe['description'] ?? '',
-                    level: recipe['level'] ?? '',
-                    type: recipe['type'] ?? '',
+                    marginRight: 5,
+                    marginLeft: 5,
+                    recipe: recipe,
                   );
                 },
                 shrinkWrap: true,

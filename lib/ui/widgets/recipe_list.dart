@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cookozy_mobile/model/recipe_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../service/recipe_service.dart';
@@ -15,10 +16,10 @@ class RecipeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
+    return FutureBuilder<List<RecipeModel>>(
       future: fetchRecipes(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedBox(
             height: 241,
             child: Center(
@@ -28,13 +29,13 @@ class RecipeList extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
-          final List<Map<String, dynamic>> allRecipes = snapshot.data ?? [];
-          final List<Map<String, dynamic>> filteredRecipes = [];
+          final List<RecipeModel> allRecipes = snapshot.data ?? [];
+          final List<RecipeModel> filteredRecipes = [];
 
           // Filter resep berdasarkan jenis
-          final List<Map<String, dynamic>> recipesByType = allRecipes
+          final List<RecipeModel> recipesByType = allRecipes
               .where((recipe) =>
-                  recipe['type'] == recipeType && recipe['verified'] == true)
+                  recipe.type == recipeType && recipe.verified == true)
               .toList();
 
           // Jika jumlah resep berdasarkan jenis kurang dari 5, tampilkan semua resep yang tersedia
@@ -47,12 +48,7 @@ class RecipeList extends StatelessWidget {
                   Row(
                     children: recipesByType.map((recipe) {
                       return RecipeCard(
-                        imageUrl: recipe['image_url'] ?? '',
-                        userName: recipe['user_name'] ?? '',
-                        title: recipe['title'] ?? '',
-                        description: recipe['description'] ?? '',
-                        level: recipe['level'] ?? '',
-                        type: recipe['type'] ?? '',
+                        recipe: recipe,
                       );
                     }).toList(),
                   ),
@@ -71,7 +67,7 @@ class RecipeList extends StatelessWidget {
 
           // Ambil resep sesuai dengan indeks yang telah dipilih
           for (var index in randomIndexes) {
-            final Map<String, dynamic> randomRecipe = recipesByType[index];
+            final RecipeModel randomRecipe = recipesByType[index];
             filteredRecipes.add(randomRecipe);
           }
 
@@ -83,12 +79,7 @@ class RecipeList extends StatelessWidget {
                 Row(
                   children: filteredRecipes.map((recipe) {
                     return RecipeCard(
-                      imageUrl: recipe['image_url'] ?? '',
-                      userName: recipe['user_name'] ?? '',
-                      title: recipe['title'] ?? '',
-                      description: recipe['description'] ?? '',
-                      level: recipe['level'] ?? '',
-                      type: recipe['type'] ?? '',
+                      recipe: recipe,
                     );
                   }).toList(),
                 ),

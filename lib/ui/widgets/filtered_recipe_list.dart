@@ -1,18 +1,18 @@
+import 'package:cookozy_mobile/model/recipe_model.dart';
 import 'package:flutter/material.dart';
 
 import 'recipe_card.dart';
 
 class FilteredRecipeList extends StatelessWidget {
-  final List<Map<String, dynamic>> recipes;
+  final List<RecipeModel> recipes;
 
   const FilteredRecipeList({
-    Key? key,
+    super.key,
     required this.recipes,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    print('Building FilteredRecipeList with recipes: $recipes');
     return LayoutBuilder(
       builder: (context, constraints) {
         int crossAxisCount = 2; // Default untuk layar kecil
@@ -33,14 +33,8 @@ class FilteredRecipeList extends StatelessWidget {
           itemCount: recipes.length,
           itemBuilder: (context, index) {
             var recipe = recipes[index];
-            print("Recipes gess: $recipes");
             return RecipeCard(
-              imageUrl: recipe['image_url'],
-              userName: recipe['user_name'],
-              title: recipe['title'],
-              description: recipe['description'],
-              level: recipe['level'],
-              type: recipe['type'],
+              recipe: recipe,
             );
           },
           shrinkWrap: true,

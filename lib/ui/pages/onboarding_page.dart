@@ -44,14 +44,18 @@ class OnBoardingPage extends StatelessWidget {
             CustomButtonWidget(
               title: "LOGIN",
               color: kSecondaryColor,
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/login');
+              },
               titleColor: kWhiteColor,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             CustomButtonWidget(
               title: "REGISTER",
               color: kSecondaryColor,
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/register');
+              },
               titleColor: kWhiteColor,
             ),
             InkWell(

@@ -5,7 +5,7 @@ import '../../shared/theme.dart';
 import '../widgets/top_section_widget.dart';
 
 class HistoryPage extends StatelessWidget {
-  const HistoryPage({Key? key});
+  const HistoryPage({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class HistoryPage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                TopSectionWidget(
+                const TopSectionWidget(
                   title: "Histori Resep",
                 ),
                 Expanded(
@@ -26,8 +26,8 @@ class HistoryPage extends StatelessWidget {
                       SliverList(
                         delegate: SliverChildListDelegate(
                           [
-                            AllRecipeList(),
-                            SizedBox(height: 70),
+                            const AllRecipeList(),
+                            const SizedBox(height: 70),
                           ],
                         ),
                       ),

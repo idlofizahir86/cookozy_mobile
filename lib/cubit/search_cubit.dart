@@ -1,3 +1,4 @@
+import 'package:cookozy_mobile/model/recipe_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../service/recipe_service.dart';
 
@@ -17,11 +18,20 @@ class SearchInitial extends SearchState {}
 
 class SearchLoading extends SearchState {}
 
+class SearchPopuler extends SearchState {
+  final List<RecipeModel> searchPopuler;
+
+  SearchPopuler(this.searchPopuler);
+}
+
 class SearchSuccess extends SearchState {
-  final List<Map<String, dynamic>> searchResults;
+  final List<RecipeModel> searchResults;
 
   SearchSuccess(this.searchResults);
 }
+
+// State untuk menandakan bahwa pencarian telah selesai
+class SearchDone extends SearchState {}
 
 class SearchError extends SearchState {
   final String errorMessage;
@@ -31,22 +41,33 @@ class SearchError extends SearchState {
 
 // Cubit untuk mengelola pencarian resep
 class SearchCubit extends Cubit<SearchState> {
-  SearchCubit() : super(SearchInitial());
+  SearchCubit() : super(SearchInitial()) {
+    fetchAllRecipes();
+  }
+
+  Future<void> fetchAllRecipes() async {
+    try {
+      final List<RecipeModel> allRecipes = await fetchRecipes();
+      emit(SearchPopuler(allRecipes));
+    } catch (e) {
+      emit(SearchError('Failed to fetch recipes. Please try again later.'));
+    }
+  }
 
   void searchRecipes(String searchTerm) async {
     emit(SearchLoading());
 
     try {
-      final List<Map<String, dynamic>> allRecipes = await fetchRecipes();
-      final List<Map<String, dynamic>> filteredRecipes = [];
+      final List<RecipeModel> allRecipes = await fetchRecipes();
+      final List<RecipeModel> filteredRecipes = [];
 
-      // Log the all recipes
-      print('All Recipes: $allRecipes');
+      final List<RecipeModel> verifiedRecipes =
+          allRecipes.where((recipe) => recipe.verified == true).toList();
 
       // Lakukan pencarian berdasarkan kata kunci di judul atau deskripsi resep
-      for (final recipe in allRecipes) {
-        final title = recipe['title'].toString().toLowerCase();
-        final description = recipe['description'].toString().toLowerCase();
+      for (final recipe in verifiedRecipes) {
+        final title = recipe.title.toString().toLowerCase();
+        final description = recipe.description.toString().toLowerCase();
         if (title.contains(searchTerm.toLowerCase()) ||
             description.contains(searchTerm.toLowerCase())) {
           filteredRecipes.add(recipe);
@@ -54,12 +75,10 @@ class SearchCubit extends Cubit<SearchState> {
       }
 
       // Log the filtered recipes
-      print('Filtered Recipes: $filteredRecipes');
 
       emit(SearchSuccess(filteredRecipes));
     } catch (e) {
       // Log the error
-      print('Error during search: $e');
       emit(SearchError('Failed to search recipes. Please try again later.'));
     }
   }

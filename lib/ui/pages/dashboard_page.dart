@@ -16,6 +16,7 @@ class DashboardPage extends StatelessWidget {
     await Future.delayed(const Duration(seconds: 2)); // Simulasi penundaan
 
     // Navigasi kembali ke halaman DashboardPage atau route '/main'
+    // ignore: use_build_context_synchronously
     Navigator.pushReplacementNamed(context, '/main');
   }
 
@@ -53,7 +54,12 @@ class DashboardPage extends StatelessWidget {
                             fontSize: 20, color: kBlackColor),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            "/menu-sarapan",
+                          );
+                        },
                         child: Text(
                           "Lihat Semua",
                           style: semiBoldTextStyle.copyWith(
@@ -64,9 +70,6 @@ class DashboardPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
                 const RecipeList(recipeType: "Sarapan"),
 
@@ -83,7 +86,12 @@ class DashboardPage extends StatelessWidget {
                             fontSize: 20, color: kBlackColor),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            "/menu-siang",
+                          );
+                        },
                         child: Text(
                           "Lihat Semua",
                           style: semiBoldTextStyle.copyWith(
@@ -94,9 +102,6 @@ class DashboardPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
                 const RecipeList(recipeType: "Makan Siang"),
 
@@ -113,7 +118,12 @@ class DashboardPage extends StatelessWidget {
                             fontSize: 20, color: kBlackColor),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            "/menu-malam",
+                          );
+                        },
                         child: Text(
                           "Lihat Semua",
                           style: semiBoldTextStyle.copyWith(
@@ -124,9 +134,6 @@ class DashboardPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
                 const RecipeList(recipeType: "Makan Malam"),
 

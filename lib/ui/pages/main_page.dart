@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../cubit/page_cubit.dart';
 import '../../shared/theme.dart';
 import './dashboard_page.dart';
-import './all_recipe_page.dart';
+import 'recipes/all_recipe_page.dart';
 import './history_page.dart';
 import './profile_page.dart';
 
