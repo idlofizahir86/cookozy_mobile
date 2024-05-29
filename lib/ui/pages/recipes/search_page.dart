@@ -112,21 +112,35 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                       if (!isSearching && searchHistory.isNotEmpty)
                         Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          margin: const EdgeInsets.only(top: 15),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Pencarian Sebelumnya",
-                                style: semiBoldTextStyle.copyWith(
-                                  fontSize: 16,
-                                  color: kBlackColor,
-                                ),
+                              Row(
+                                children: [
+                                  SizedBox(width: 20),
+                                  Text(
+                                    "Pencarian Sebelumnya",
+                                    style: semiBoldTextStyle.copyWith(
+                                      fontSize: 16,
+                                      color: kBlackColor,
+                                    ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 10),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: buildSearchHistoryItems(),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    SizedBox(width: 20),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: buildSearchHistoryItems(),
+                                    ),
+                                  ],
+                                ),
                               ),
                               const SizedBox(height: 20),
                             ],
@@ -271,7 +285,7 @@ class _SearchPageState extends State<SearchPage> {
         child: Container(
           height: 40,
           padding: const EdgeInsets.only(left: 15, right: 10),
-          margin: const EdgeInsets.only(bottom: 10),
+          margin: const EdgeInsets.only(right: 10),
           decoration: BoxDecoration(
             color: const Color.fromARGB(225, 229, 221, 191),
             borderRadius: BorderRadius.circular(12),
