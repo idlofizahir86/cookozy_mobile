@@ -26,7 +26,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
   }
 
   Future<RecipeDetailModel> fetchDetailRecipe(String recipeId) async {
-    return await fetchRecipeDetail(recipeId);
+    return await RecipeService().fetchRecipeDetail(recipeId);
   }
 
   @override
@@ -36,7 +36,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
       body: SafeArea(
         bottom: false,
         child: FutureBuilder<RecipeDetailModel>(
-          future: fetchRecipeDetail(widget.recipe.id),
+          future: RecipeService().fetchRecipeDetail(widget.recipe.id),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

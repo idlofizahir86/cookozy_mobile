@@ -1,12 +1,19 @@
+import 'package:cookozy_mobile/model/user_model.dart';
+import 'package:cookozy_mobile/ui/pages/main_page.dart';
+import 'package:cookozy_mobile/ui/pages/maintenance_page.dart';
+
+import '../../service/user_service.dart';
 import '../widgets/recipe_list.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/banner_carousel.dart';
 import '../widgets/day_widget.dart';
 import '../../shared/theme.dart';
+import 'maintenance_notif_page.dart';
 
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
+  final String userId;
+  const DashboardPage({super.key, required this.userId});
 
   Future<void> _refreshData(BuildContext context) async {
     // Tempatkan logika untuk memuat ulang data di sini
@@ -17,7 +24,14 @@ class DashboardPage extends StatelessWidget {
 
     // Navigasi kembali ke halaman DashboardPage atau route '/main'
     // ignore: use_build_context_synchronously
-    Navigator.pushReplacementNamed(context, '/main');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MainPage(
+          userId: userId,
+        ),
+      ),
+    );
   }
 
   @override
@@ -36,7 +50,7 @@ class DashboardPage extends StatelessWidget {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 20),
-                  child: headerDasboard(context),
+                  child: headerDasboard(context, userId),
                 ),
                 const SizedBox(height: 10),
                 const BannerCarousel(),
@@ -149,94 +163,122 @@ class DashboardPage extends StatelessWidget {
   }
 }
 
-Widget headerDasboard(BuildContext context) {
-  return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 20),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(
-          width: 165,
-          child: Column(
+Widget headerDasboard(BuildContext context, String userId) {
+  return FutureBuilder<UserModel?>(
+    future: getUserData(userId), // Panggil fungsi getUserData
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Container(); // Menampilkan indikator loading jika data sedang dimuat
+      } else if (snapshot.hasError) {
+        return Text(
+            'Error: ${snapshot.error}'); // Menampilkan pesan kesalahan jika terjadi kesalahan
+      } else {
+        final userData = snapshot.data!; // Mendapatkan UserModel dari snapshot
+
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const DayWidget(),
-              Text(
-                "Nana Tobeng",
-                style: semiBoldTextStyle.copyWith(
-                  fontSize: 24,
-                  color: kBlackColor,
-                ),
-                overflow: TextOverflow.ellipsis,
-              )
+              SizedBox(
+                  width: 165,
+                  child: userData.nama == ''
+                      ? Column(
+                          children: [
+                            DayWidget(isLogin: false),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            DayWidget(isLogin: true),
+                            Text(
+                              userData
+                                  .nama, // Menggunakan data nama pengguna dari UserModel
+                              style: semiBoldTextStyle.copyWith(
+                                fontSize: 24,
+                                color: kBlackColor,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          ],
+                        )),
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/search');
+                    },
+                    child: Container(
+                      width: 55,
+                      height: 55,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: kSilver3Color,
+                      ),
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    "assets/icons/icon_search.png",
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MaintenanceNotifPage()),
+                      );
+                    },
+                    child: Container(
+                      width: 55,
+                      height: 55,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: kSilver3Color,
+                      ),
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    "assets/icons/icon_notif.png",
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-        ),
-        Row(
-          children: [
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/search');
-              },
-              child: Container(
-                width: 55,
-                height: 55,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: kSilver3Color,
-                ),
-                child: Stack(
-                  children: [
-                    Center(
-                      child: Container(
-                        width: 24,
-                        height: 24,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              "assets/icons/icon_search.png",
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(width: 5),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/main');
-              },
-              child: Container(
-                width: 55,
-                height: 55,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: kSilver3Color,
-                ),
-                child: Stack(
-                  children: [
-                    Center(
-                      child: Container(
-                        width: 24,
-                        height: 24,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              "assets/icons/icon_notif.png",
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
+        );
+      }
+    },
   );
+}
+
+Future<UserModel?> getUserData(String userId) async {
+  return await UserService().getUserData(userId);
 }

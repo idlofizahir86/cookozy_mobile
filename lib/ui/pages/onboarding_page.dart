@@ -1,3 +1,5 @@
+import 'package:cookozy_mobile/ui/pages/main_page.dart';
+
 import '../widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import '../../shared/theme.dart';
@@ -60,7 +62,14 @@ class OnBoardingPage extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/main');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainPage(
+                      userId: '',
+                    ),
+                  ),
+                );
               },
               child: Text(
                 "Lewati",

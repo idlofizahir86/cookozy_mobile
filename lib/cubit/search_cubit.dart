@@ -47,7 +47,7 @@ class SearchCubit extends Cubit<SearchState> {
 
   Future<void> fetchAllRecipes() async {
     try {
-      final List<RecipeModel> allRecipes = await fetchRecipes();
+      final List<RecipeModel> allRecipes = await RecipeService().fetchRecipes();
       emit(SearchPopuler(allRecipes));
     } catch (e) {
       emit(SearchError('Failed to fetch recipes. Please try again later.'));
@@ -58,7 +58,7 @@ class SearchCubit extends Cubit<SearchState> {
     emit(SearchLoading());
 
     try {
-      final List<RecipeModel> allRecipes = await fetchRecipes();
+      final List<RecipeModel> allRecipes = await RecipeService().fetchRecipes();
       final List<RecipeModel> filteredRecipes = [];
 
       final List<RecipeModel> verifiedRecipes =

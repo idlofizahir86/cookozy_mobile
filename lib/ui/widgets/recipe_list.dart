@@ -17,9 +17,9 @@ class RecipeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<RecipeModel>>(
-      future: fetchRecipes(),
+      future: RecipeService().fetchRecipes(),
       builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedBox(
             height: 241,
             child: Center(

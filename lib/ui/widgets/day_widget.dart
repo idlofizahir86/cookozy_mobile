@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../shared/theme.dart';
 
 class DayWidget extends StatelessWidget {
-  const DayWidget({super.key});
+  final bool isLogin;
+  const DayWidget({super.key, required this.isLogin});
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +25,42 @@ class DayWidget extends StatelessWidget {
       iconAsset = 'assets/icons/icon_sun.png';
     }
 
-    return Row(
-      children: [
-        Image.asset(
-          iconAsset,
-          width: 24,
-          height: 24,
-        ),
-        const SizedBox(width: 10),
-        Text(
-          greeting,
-          style: mediumTextStyle.copyWith(
-            fontSize: 14,
-            color: kBlackColor,
-          ),
-        ),
-      ],
+    return Container(
+      child: isLogin
+          ? Row(
+              children: [
+                Image.asset(
+                  iconAsset,
+                  width: 24,
+                  height: 24,
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  greeting,
+                  style: mediumTextStyle.copyWith(
+                    fontSize: 14,
+                    color: kBlackColor,
+                  ),
+                ),
+              ],
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  iconAsset,
+                  width: 24,
+                  height: 24,
+                ),
+                Text(
+                  greeting,
+                  style: mediumTextStyle.copyWith(
+                    fontSize: 20,
+                    color: kBlackColor,
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }
